@@ -113,18 +113,51 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
+    def dic_create(self, args):
+        """creates a dictionary from a list"""
+        dic = {}
+        for arg in args:
+            if "=" in arg:
+                vals_toa_add = arg.split('=', 1)
+                key = vals_toa_add[0]
+                value = vals_toa_add[1]
+                if value[0] == value[-1] == '"':
+                    value = value.replace('"', '').replace('_', ' ')
+                else:
+                    try:
+                        value = int(value)
+                    except:
+                        try:
+                            value = float(value)
+                        except:
+                            continue
+                dic[key] = value
+        return (dic)
+
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        try:
+            if not args:
+                raise SyntaxError()
+            split1 = args.split(' ')
+            new_instance = eval('{}()'.format(split1[0]))
+            params = split1[1:]
+            for param in params:
+                k, v = param.split('=')
+                try:
+                    attribute = HBNBCommand.verify_attribute(v)
+                except:
+                    continue
+                if not attribute:
+                    continue
+                setattr(new_instance, k, attribute)
+            new_instance.save()
+            print(new_instance.id)
+        except SyntaxError:
             print("** class name missing **")
-            return
-        elif args not in HBNBCommand.classes:
+        except NameError as e:
             print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+
 
     def help_create(self):
         """ Help information for the create method """
@@ -319,6 +352,23 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
+
+    @classmethod
+    def verify_attribute(cls, attribute):
+        """
+        Verify if the attribute is correctly formatted
+        """
+        if attribute[0] is attribute[-1] in ['"', "'"]:
+            return attribute.strip('"\'').replace('_', ' ').replace('\\', '"')
+        else:
+            try:
+                try:
+                    return int(attribute)
+                except ValueError:
+                    return float(attribute)
+            except ValueError:
+                return None
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
