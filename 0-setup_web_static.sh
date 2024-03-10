@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 # a Bash script that sets up your web servers for the deployment of web_static
 
-apt-get update
-apt-get -y install nginx
+sudo apt-get update
+sudo apt-get install nginx -y
 # Install Nginx if it not already installed
-mkdir -p /data/web_static/releases/test/
+mkdir -p data/web_static data/web_static/releases data/web_static/shared data/web_static/releases/test
 # Create the folder /data/ if it doesn’t already exist
 # Create the folder /data/web_static/ if it doesn’t already exist
 # Create the folder /data/web_static/releases/ if it doesn’t already exist
 # Create the folder /data/web_static/releases/test/ if it doesn’t already exist
-mkdir -p /data/web_static/shared/
 # Create the folder /data/web_static/shared/ if it doesn’t already exist
 echo '<html>
   <head>
@@ -32,4 +31,4 @@ sed -i '51 i \\n\tlocation /hbnb_static {\n\talias /data/web_static/current;\n\t
 # /data/web_static/current/ to hbnb_static
 # (ex: https://mydomainname.tech/hbnb_static).
 # Don’t forget to restart Nginx after updating the configuration:
-service nginx restart
+sudo service nginx restart
