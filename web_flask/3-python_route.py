@@ -30,7 +30,7 @@ def C_route(text):
 def py_is_cool(text='is cool'):
     """ Function that resturs 'python' + the rest of the link
         or 'is cool' by default """
-    return "python %s" % text.replace("_", " ")
+    return "Python %s" % text.replace("_", " ")
 
 
 if __name__ == "__main__":
