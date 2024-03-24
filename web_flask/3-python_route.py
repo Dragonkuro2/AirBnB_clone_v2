@@ -25,7 +25,7 @@ def C_route(text):
     """ Function that returns 'C' + the rest of the link """
     return "C %s" % text.replace("_", " ")
 
-
+@app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def py_is_cool(text='is cool'):
     """ Function that resturs 'python' + the rest of the link
