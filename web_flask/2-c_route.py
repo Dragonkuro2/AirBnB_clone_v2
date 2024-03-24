@@ -21,7 +21,7 @@ def hello():
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def C_route():
+def C_route(text):
     """ Function that returns 'C' + the rest of the link """
     return "C %s" % text.replace("_", " ")
 
