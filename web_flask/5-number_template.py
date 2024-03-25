@@ -40,10 +40,10 @@ def is_num(n):
     return "%d is a number" % n
 
 
-@app.route('number__template/<int:n>', strict_slashes=False)
+@app.route('/number_template/<int:n>', strict_slashes=False)
 def num_tmp(n):
     """ Function that returns a jinja template. """
-    return render_template("templates/5-number.html", number=n)
+    return render_template("5-number.html", number=n)
 
 
 if __name__ == "__main__":
